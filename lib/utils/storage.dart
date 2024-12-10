@@ -12,6 +12,14 @@ Future<void> writeToken(String token) async {
       key: 'expiry_time', value: expiryTime.toIso8601String());
 }
 
+Future<void> saveAvatar(String avatar) async {
+  await secureStorage.write(key: 'avatar', value: avatar);
+}
+Future<String?> getAvatar() async {
+  return await secureStorage.read(key: 'avatar');
+}
+
+
 /// Baca token jika sesi masih aktif
 Future<String?> readToken() async {
   final expiryTimeString = await secureStorage.read(key: 'expiry_time');
@@ -44,8 +52,6 @@ Future<bool> isSessionActive() async {
   }
   return false; // Tidak ada sesi
 }
-
-
 
 Future<void> saveUserToSecureStorage(Map<String, dynamic> userData) async {
   final userDataJson = jsonEncode(userData);

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:brd/utils/storage.dart';
 import 'package:brd/view/auth/custom_button.dart';
 import 'package:brd/view/auth/dialog.dart';
 import 'package:brd/view/auth/entry_field.dart';
@@ -251,6 +252,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         avatar ??
                             'https://devapi.blueraycargo.id/static/images/no-image.jpg');
                     if (response.contains('successfully')) {
+                      await saveAvatar(avatar ??
+                          'https://devapi.blueraycargo.id/static/images/no-image.jpg');
                       showSuksesDialog(context, () async {
                         Get.offAll(() => const LoginScreen());
                       }, response);

@@ -22,6 +22,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = Get.put(AddressController());
+  String? avatar;
+  void initAvatar() async {
+    avatar = await getAvatar();
+  }
 
   @override
   void initState() {
@@ -34,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     controller.fetchAddresses();
+    initAvatar();
   }
 
   @override
@@ -41,7 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: Image.network('src',width: 25,height: 25,),
+        leading: Image.network(
+          avatar ?? 'https://devapi.blueraycargo.id/static/images/no-image.jpg',
+          width: 25,
+          height: 25,
+        ),
         title: Text(
           'Daftar Alamat',
           style: TextStyle(
@@ -96,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       address: address,
                       isLoading: false,
                       onEdit: () {
-                      Get.to(()=> UpdateAddressScreen(address: address));
+                        Get.to(() => UpdateAddressScreen(address: address));
                       },
                       onDelete: () {
                         _showConfirmationDialogFinal(context, () async {
@@ -105,11 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               .deleteAddress(address.addressId ?? 0);
                           if (response.contains('Berhasil')) {
                             showSuksesDialog(context, () async {
-                            setState(() {
+                              setState(() {
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
-                                 controller.fetchAddresses();
+                                controller.fetchAddresses();
                               });
                             }, response);
                           } else {
@@ -128,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
-                                 controller.fetchAddresses();
+                                controller.fetchAddresses();
                               });
                             }, response);
                           } else {
