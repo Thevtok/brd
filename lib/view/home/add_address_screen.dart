@@ -218,6 +218,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           npwpLink);
                       if (response.contains('berhasil')) {
                         showSuksesDialog(context, () async {
+                        await  controller.fetchAddresses();
                           Get.offAll(() => const HomeScreen());
                         }, response);
                       } else {

@@ -51,7 +51,9 @@ class AuthController extends GetxController {
           return pesan;
         }
         var data = response.data['image_url'];
-        var pesan = jsonEncode(data).replaceAll('"', '');
+           
+        var pesan = jsonEncode(data);
+       
         return pesan;
       }
     } catch (error) {
